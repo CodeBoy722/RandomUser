@@ -34,7 +34,6 @@ class UserListViewModel @Inject constructor(
     }
 
     private suspend fun getRandomUsers(page: Int, results: Int, seed: String){
-
         _userListScreenState.value = _userListScreenState.value.copy(
             userListState = DataState.Loading()
         )

@@ -10,20 +10,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.codeboy.randomuserandroid.navigation.SetupNavigation
 import com.codeboy.randomuserandroid.ui.theme.RandomUserTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RandomUserTheme {
+                val navController = rememberNavController()
+                SetupNavigation(navController)
                 // A surface container using the 'background' color from the theme
-                Surface(
+               /* Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Greeting("Android")
-                }
+                }*/
             }
         }
     }
