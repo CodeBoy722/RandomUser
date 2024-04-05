@@ -2,6 +2,7 @@ package com.codeboy.randomuserandroid.views.userList
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
+import com.codeboy.randomuserandroid.domain.models.User
 import com.codeboy.randomuserandroid.domain.useCases.UseCaseRandomUsers
 import com.codeboy.randomuserandroid.utils.DataState
 import com.codeboy.randomuserandroid.views.BaseViewModel
@@ -19,8 +20,25 @@ class UserListViewModel @Inject constructor(
     app: Application
 ) : BaseViewModel(application = app){
 
+    init {
+        // get our saved list from storage and show on view while waiting for new data
+        getSavedList()
+    }
+
     private val _userListScreenState = MutableStateFlow(UserListUiState())
     val userListScreenState : StateFlow<UserListUiState> = _userListScreenState
+
+    private val _savedUserList = MutableStateFlow(listOf<User>())
+    val savedUserList: StateFlow<List<User>> = _savedUserList
+
+    //get the userlist saved in storage
+    fun getSavedList(){
+
+    }
+
+    fun saveUserlist(){
+
+    }
 
     fun onEven(even: UserListEvents) {
 
@@ -40,10 +58,27 @@ class UserListViewModel @Inject constructor(
 
         val userList = ucRandomUsers.invoke(page, results, seed)
 
-        _userListScreenState.value = _userListScreenState.value.copy(
-            userListState = userList
-        )
+        when {
+            savedUserList.value.isNotEmpty() && userList is DataState.Success -> userList.let {
+                val pagingList: MutableList<User> = mutableListOf()
+                pagingList.addAll(savedUserList.value)
+                pagingList.addAll(userList.extractData!!)
+
+                _userListScreenState.value = _userListScreenState.value.copy(userListState = DataState.Success(pagingList))
+            }
+
+            else -> {
+                _userListScreenState.value = _userListScreenState.value.copy(
+                    userListState = userList
+                )
+                _savedUserList.value = userList.extractData!!
+                saveUserlist()
+            }
+        }
     }
+
+
+
 
 
 }
