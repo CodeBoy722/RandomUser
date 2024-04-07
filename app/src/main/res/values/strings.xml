@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RandomUser</string>
+    <string name="error_api">Failed to get users, your internet may be unstable</string>
+    <string name="go_to_detail">go to user detail</string>
+    <string name="user_details">User Details</string>
+    <string name="your_internet_is_unstable">Your internet is Unstable</string>
 </resources>

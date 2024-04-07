@@ -23,7 +23,7 @@ data class Location(
 
     @SerializedName("postcode")
     @Expose
-    val postcode: Int,
+    val postcode: String?,
 
     @SerializedName("coordinates")
     @Expose
@@ -39,7 +39,7 @@ data class Location(
         city = "",
         state = "",
         country = "",
-        postcode = 0,
+        postcode = "",
         coordinates = Coordinates(),
         timezone = TimeZone()
     )

@@ -21,6 +21,7 @@ object ApiRequestUtils {
                 val response = call()
 
                 if (response.isSuccessful) {
+                    printLogD(TAG, "Response Body  "+response.body().toString())
                     val body = response.body()
                     if (body != null) {
                         printLogD(TAG, "********** API SUCCESS: $body")
